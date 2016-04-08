@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.dany.plo.entitas;
 
 /**
@@ -11,28 +10,54 @@ package com.dany.plo.entitas;
  * @author Dany Candra
  */
 public class Dus {
-    
-    private String id_dus;
-    private int namaDus;
+
+    private String idDus;
+    private String namaDus;
+    private Lantai lantai;
+    private Rak rak;
+    private int quota;
 
     public Dus() {
     }
 
-    public String getId_dus() {
-        return id_dus;
+    public String getIdDus() {
+        return idDus;
     }
 
-    public void setId_dus(String id_dus) {
-        this.id_dus = id_dus;
+    public void setIdDus(String idDus) {
+        this.idDus = idDus;
     }
 
-    public int getNamaDus() {
+    public Lantai getLantai() {
+        return lantai;
+    }
+
+    public void setLantai(Lantai lantai) {
+        this.lantai = lantai;
+    }
+
+    public Rak getRak() {
+        return rak;
+    }
+
+    public void setRak(Rak rak) {
+        this.rak = rak;
+    }
+
+    public int getQuota() {
+        return quota;
+    }
+
+    public void setQuota(int quota) {
+        this.quota = quota;
+    }
+
+    public String getNamaDus() {
         return namaDus;
     }
 
-    public void setNamaDus(int namaDus) {
+    public void setNamaDus(String namaDus) {
         this.namaDus = namaDus;
     }
-    
-    
+
 }

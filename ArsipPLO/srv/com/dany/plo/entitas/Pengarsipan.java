@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.dany.plo.entitas;
 
 import java.util.Date;
@@ -13,14 +12,15 @@ import java.util.Date;
  * @author Dany Candra
  */
 public class Pengarsipan {
-    
+
     private String idArsip;
     private Debitur debitur;
     private Date tanggalTerima;
     private User userPenerima;
-    private Lokasi lokasi;
+    private Pejabat pejabatPenerima;
     private Date tanggalKembali;
     private User userPengembali;
+    private Pejabat pejabatPengembali;
     private String statusArsip;
     private String statusKembali;
 
@@ -59,14 +59,6 @@ public class Pengarsipan {
         this.userPenerima = userPenerima;
     }
 
-    public Lokasi getLokasi() {
-        return lokasi;
-    }
-
-    public void setLokasi(Lokasi lokasi) {
-        this.lokasi = lokasi;
-    }
-
     public Date getTanggalKembali() {
         return tanggalKembali;
     }
@@ -98,6 +90,21 @@ public class Pengarsipan {
     public void setStatusKembali(String statusKembali) {
         this.statusKembali = statusKembali;
     }
-    
-    
+
+    public Pejabat getPejabatPenerima() {
+        return pejabatPenerima;
+    }
+
+    public void setPejabatPenerima(Pejabat pejabatPenerima) {
+        this.pejabatPenerima = pejabatPenerima;
+    }
+
+    public Pejabat getPejabatPengembali() {
+        return pejabatPengembali;
+    }
+
+    public void setPejabatPengembali(Pejabat pejabatPengembali) {
+        this.pejabatPengembali = pejabatPengembali;
+    }
+
 }

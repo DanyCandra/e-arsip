@@ -12,7 +12,8 @@ package com.dany.plo.entitas;
 public class Rak {
 
     private String idRak;
-    private String namaRak;
+    private int namaRak;
+    private int quota;
 
     public Rak() {
     }
@@ -25,12 +26,20 @@ public class Rak {
         this.idRak = idRak;
     }
 
-    public String getNamaRak() {
+    public int getNamaRak() {
         return namaRak;
     }
 
-    public void setNamaRak(String namaRak) {
+    public void setNamaRak(int namaRak) {
         this.namaRak = namaRak;
+    }
+
+    public int getQuota() {
+        return quota;
+    }
+
+    public void setQuota(int quota) {
+        this.quota = quota;
     }
 
 }

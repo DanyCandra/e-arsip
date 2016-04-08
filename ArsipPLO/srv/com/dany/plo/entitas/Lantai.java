@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.dany.plo.entitas;
 
 /**
@@ -11,12 +10,18 @@ package com.dany.plo.entitas;
  * @author Dany Candra
  */
 public class Lantai {
-    
+
     private String idLantai;
-    private String nama_lantai;
+    private String namaLantai;
 
     public Lantai() {
     }
+
+    public Lantai(String idLantai, String namaLantai) {
+        this.idLantai = idLantai;
+        this.namaLantai = namaLantai;
+    }
+    
 
     public String getIdLantai() {
         return idLantai;
@@ -26,14 +31,12 @@ public class Lantai {
         this.idLantai = idLantai;
     }
 
-    public String getNama_lantai() {
-        return nama_lantai;
+    public String getNamaLantai() {
+        return namaLantai;
     }
 
-    public void setNama_lantai(String nama_lantai) {
-        this.nama_lantai = nama_lantai;
+    public void setNamaLantai(String namaLantai) {
+        this.namaLantai = namaLantai;
     }
-    
-    
-    
+
 }
