@@ -62,8 +62,23 @@ public class PejabatModel {
     public List<PejabatModel> load(int skip, int max) throws ArsipException {
         List<PejabatModel> list = new ArrayList<>();
 
-        PejabatDao dao = new PejabatDaoImpl(DatabaseUtilities.getConnection());
+        PejabatDao dao = DatabaseUtilities.getPejabatDao();
         List<Pejabat> listTmp = dao.getPejabat(skip, max);
+        for (Pejabat pejabat : listTmp) {
+            PejabatModel model = new PejabatModel();
+            model.setIdPejabat(pejabat.getIdPejabat());
+            model.setNamaPejabat(pejabat.getNamaPejabat());
+            model.setJabatan(pejabat.getJabatan());
+            list.add(model);
+        }
+        return list;
+    }
+
+    public List<PejabatModel> loadCombo() throws ArsipException {
+        List<PejabatModel> list = new ArrayList<>();
+
+        PejabatDao dao = DatabaseUtilities.getPejabatDao();
+        List<Pejabat> listTmp = dao.getPejabat();
         for (Pejabat pejabat : listTmp) {
             PejabatModel model = new PejabatModel();
             model.setIdPejabat(pejabat.getIdPejabat());
@@ -76,7 +91,7 @@ public class PejabatModel {
 
     public Long getLongList() throws ArsipException {
         Long longList = 0L;
-        PejabatDao dao = new PejabatDaoImpl(DatabaseUtilities.getConnection());
+        PejabatDao dao = DatabaseUtilities.getPejabatDao();
         longList = dao.count();
         return longList;
     }
@@ -87,7 +102,7 @@ public class PejabatModel {
         pejabat.setNamaPejabat(namaPejabat);
         pejabat.setJabatan(jabatan);
 
-        PejabatDao dao = new PejabatDaoImpl(DatabaseUtilities.getConnection());
+        PejabatDao dao = DatabaseUtilities.getPejabatDao();
         dao.insertPejabat(pejabat);
     }
 
@@ -97,19 +112,40 @@ public class PejabatModel {
         pejabat.setNamaPejabat(namaPejabat);
         pejabat.setJabatan(jabatan);
 
-        PejabatDao dao = new PejabatDaoImpl(DatabaseUtilities.getConnection());
+        PejabatDao dao = DatabaseUtilities.getPejabatDao();
         dao.updatePejabat(pejabat);
     }
 
     public boolean isDelete() throws ArsipException {
-        PejabatDao dao = new PejabatDaoImpl(DatabaseUtilities.getConnection());
+        PejabatDao dao = DatabaseUtilities.getPejabatDao();
         boolean result = dao.canDelete(idPejabat);
         return result;
     }
 
     public void delete() throws ArsipException {
-        PejabatDao dao = new PejabatDaoImpl(DatabaseUtilities.getConnection());
+        PejabatDao dao = DatabaseUtilities.getPejabatDao();
         dao.delete(idPejabat);
+    }
+
+    public Pejabat getPejabatFromModel(PejabatModel model) {
+        Pejabat pejabat = new Pejabat();
+        pejabat.setIdPejabat(model.getIdPejabat());
+        pejabat.setJabatan(model.getJabatan());
+        pejabat.setNamaPejabat(model.getNamaPejabat());
+        return pejabat;
+    }
+
+    public PejabatModel getById(String idPejabat) throws ArsipException {
+        PejabatDao dao = DatabaseUtilities.getPejabatDao();
+        Pejabat pejabat = dao.getPejabat(idPejabat);
+        PejabatModel model = null;
+        if (pejabat != null) {
+            model = new PejabatModel();
+            model.setIdPejabat(pejabat.getIdPejabat());
+            model.setNamaPejabat(pejabat.getNamaPejabat());
+            model.setJabatan(pejabat.getJabatan());
+        }
+        return model;
     }
 
 }

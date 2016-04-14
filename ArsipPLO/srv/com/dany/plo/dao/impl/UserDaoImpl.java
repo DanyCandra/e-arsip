@@ -241,4 +241,36 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    @Override
+    public User getUser(String idUser) throws ArsipException {
+        final String SELECT = "SELECT * FROM USER WHERE ID_USER=?";
+        User user = null;
+
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SELECT);
+            statement.setString(1, idUser);
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                user = new User();
+                user.setIdUser(set.getString("ID_USER"));
+                user.setNama(set.getString("NAMA"));
+                user.setPassword(set.getString("PASSWORD"));
+                user.setUserName(set.getString("USERNAME"));
+            }
+        } catch (SQLException ex) {
+            throw new ArsipException(ex.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    throw new ArsipException(ex.getMessage());
+                }
+            }
+        }
+
+        return user;
+    }
+
 }

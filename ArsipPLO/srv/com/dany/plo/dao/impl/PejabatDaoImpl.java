@@ -7,7 +7,6 @@ package com.dany.plo.dao.impl;
 
 import com.dany.plo.entitas.Pejabat;
 import com.dany.plo.dao.PejabatDao;
-import com.dany.plo.dao.PejabatDao;
 import com.dany.plo.exception.ArsipException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -65,6 +64,37 @@ public class PejabatDaoImpl implements PejabatDao {
             statement = connection.prepareStatement(SELECT);
             statement.setInt(1, skip);
             statement.setInt(2, max);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                Pejabat pejabat = new Pejabat();
+                pejabat.setIdPejabat(set.getString("ID_PEJABAT"));
+                pejabat.setNamaPejabat(set.getString("NAMA_PEJABAT"));
+                pejabat.setJabatan(set.getString("JABATAN"));
+                list.add(pejabat);
+            }
+        } catch (SQLException ex) {
+            throw new ArsipException(ex.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    throw new ArsipException(ex.getMessage());
+                }
+            }
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Pejabat> getPejabat() throws ArsipException {
+        final String SELECT = "SELECT * FROM PEJABAT";
+        List<Pejabat> list = new ArrayList<>();
+
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SELECT);
             ResultSet set = statement.executeQuery();
             while (set.next()) {
                 Pejabat pejabat = new Pejabat();
@@ -203,6 +233,37 @@ public class PejabatDaoImpl implements PejabatDao {
                 }
             }
         }
+    }
+
+    @Override
+    public Pejabat getPejabat(String id) throws ArsipException {
+        final String SELECT = "SELECT * FROM PEJABAT WHERE ID_PEJABAT=?";
+        Pejabat pejabat = null;
+
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SELECT);
+            statement.setString(1, id);
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                pejabat = new Pejabat();
+                pejabat.setIdPejabat(set.getString("ID_PEJABAT"));
+                pejabat.setNamaPejabat(set.getString("NAMA_PEJABAT"));
+                pejabat.setJabatan(set.getString("JABATAN"));
+            }
+        } catch (SQLException ex) {
+            throw new ArsipException(ex.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    throw new ArsipException(ex.getMessage());
+                }
+            }
+        }
+
+        return pejabat;
     }
 
 }

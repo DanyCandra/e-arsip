@@ -20,6 +20,10 @@ public interface PejabatDao {
     public void updatePejabat(Pejabat pejabat) throws ArsipException;
 
     public List<Pejabat> getPejabat(int skip, int max) throws ArsipException;
+    
+    public Pejabat getPejabat(String id) throws ArsipException;
+
+    public List<Pejabat> getPejabat() throws ArsipException;
 
     public boolean canDelete(String idPejabat) throws ArsipException;
 

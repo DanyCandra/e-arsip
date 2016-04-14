@@ -65,8 +65,8 @@ public class QuotaController {
                 && ValidatorNotNull.isNotNull(tmpQuotaRak, quota, "Quota Rak") == true
                 && ValidatorNumber.isNumber(tmpQuotaDus, quota, "Quota Rak")
                 && ValidatorNumber.isNumber(tmpQuotaRak, quota, "Quota Dus")
-                && ValidatorTextLimit.isLimit(tmpQuotaDus, 2, quota)
-                && ValidatorTextLimit.isLimit(tmpQuotaRak, 2, quota)) {
+                && ValidatorTextLimit.isLimit(tmpQuotaDus, 2, quota,"Quota Dus")
+                && ValidatorTextLimit.isLimit(tmpQuotaRak, 2, quota,"Quota Rak")) {
 
             quotaModel.setQuotaDus(Integer.valueOf(tmpQuotaDus));
             quotaModel.setQuotaRak(Integer.valueOf(tmpQuotaRak));

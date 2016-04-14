@@ -18,6 +18,7 @@ public class Pengarsipan {
     private Date tanggalTerima;
     private User userPenerima;
     private Pejabat pejabatPenerima;
+    private Dus dus;
     private Date tanggalKembali;
     private User userPengembali;
     private Pejabat pejabatPengembali;
@@ -106,5 +107,15 @@ public class Pengarsipan {
     public void setPejabatPengembali(Pejabat pejabatPengembali) {
         this.pejabatPengembali = pejabatPengembali;
     }
+
+    public Dus getDus() {
+        return dus;
+    }
+
+    public void setDus(Dus dus) {
+        this.dus = dus;
+    }
+    
+    
 
 }

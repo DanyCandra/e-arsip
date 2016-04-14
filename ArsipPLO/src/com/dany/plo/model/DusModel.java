@@ -17,7 +17,9 @@ import com.dany.plo.entitas.Rak;
 import com.dany.plo.exception.ArsipException;
 import com.dany.plo.utilities.DatabaseUtilities;
 import com.dany.plo.utilities.GenerateAutoId;
-import com.dany.plo.view.resource.render.LokasiListCellRender;
+import com.dany.plo.view.resource.render.table.DusTableRender;
+import com.dany.plo.view.resource.render.table.LantaiTableRender;
+import com.dany.plo.view.resource.render.table.RakTableRender;
 import com.stripbandunk.jwidget.annotation.TableColumn;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,12 +36,12 @@ import java.util.logging.Logger;
 public class DusModel {
 
     private String idDus;
-    @TableColumn(name = "NAMA DUS", number = 1, size = 30)
+    @TableColumn(name = "NAMA DUS", number = 1, size = 30, renderer = DusTableRender.class)
     private String namaDus;
-    @TableColumn(name = "LOKASI", number = 1, size = 30)
-    private String lokasi;
-    @TableColumn(name = "RAK", number = 1, size = 30)
-    private int rak;
+    @TableColumn(name = "LOKASI", number = 1, size = 30, renderer = LantaiTableRender.class)
+    private LantaiModel lokasi;
+    @TableColumn(name = "RAK", number = 1, size = 30, renderer = RakTableRender.class)
+    private RakModel rak;
     @TableColumn(name = "QUOTA", number = 1, size = 30)
     private int quota;
 
@@ -62,19 +64,19 @@ public class DusModel {
         this.namaDus = namaDus;
     }
 
-    public String getLokasi() {
+    public LantaiModel getLokasi() {
         return lokasi;
     }
 
-    public void setLokasi(String lokasi) {
+    public void setLokasi(LantaiModel lokasi) {
         this.lokasi = lokasi;
     }
 
-    public int getRak() {
+    public RakModel getRak() {
         return rak;
     }
 
-    public void setRak(int rak) {
+    public void setRak(RakModel rak) {
         this.rak = rak;
     }
 
@@ -89,13 +91,13 @@ public class DusModel {
     public List<DusModel> load(int skip, int max) throws ArsipException {
         List<DusModel> list = new ArrayList<>();
 
-        DusDao dao = new DusDaoImpl(DatabaseUtilities.getConnection());
+        DusDao dao = DatabaseUtilities.getDusDao();
         List<Dus> listTmp = dao.getAllDus(skip, max);
         for (Dus dus : listTmp) {
             DusModel model = new DusModel();
             model.setIdDus(dus.getIdDus());
-            model.setLokasi(dus.getLantai().getNamaLantai());
-            model.setRak(dus.getRak().getNamaRak());
+            model.setLokasi(new LantaiModel().getLantaiModel(dus.getLantai().getIdLantai()));
+            model.setRak(new RakModel().getRakModel(dus.getRak().getIdRak()));
             model.setNamaDus(dus.getNamaDus());
             model.setQuota(dus.getQuota());
             list.add(model);
@@ -106,18 +108,17 @@ public class DusModel {
 
     public int getLongList() throws ArsipException {
         int longList = 0;
-        DusDao dao = new DusDaoImpl(DatabaseUtilities.getConnection());
+        DusDao dao = DatabaseUtilities.getDusDao();
         longList = dao.getDusAkhir();
         return longList;
     }
 
     public void insertDus(int jumlahDus, LantaiModel lantaiInsert) throws ArsipException {
-        LantaiDao lantaiDao = new LantaiDaoImpl(DatabaseUtilities.getConnection());
-        RakDao rakDao = new RakDaoImpl(DatabaseUtilities.getConnection());
-        DusDao dusDao = new DusDaoImpl(DatabaseUtilities.getConnection());
+        LantaiDao lantaiDao = DatabaseUtilities.getLantaiDao();
+        RakDao rakDao = DatabaseUtilities.getRakDao();
+        DusDao dusDao = DatabaseUtilities.getDusDao();
 
-        
-        int dus = dusDao.getDusAkhir() + 1;
+        int dus = dusDao.getDusAkhir();
         int rak = rakDao.getRakAkhir();
 
         if (rak == 0) {
@@ -136,15 +137,6 @@ public class DusModel {
             if (tmpquotaRak != 0) {
                 if (tmpquotaRak <= quotaRak) {
                     tmpquotaRak = tmpquotaRak - 1;
-
-                    Dus d = new Dus();
-                    d.setIdDus(GenerateAutoId.generateAutoId());
-                    d.setNamaDus(lantaiInsert.getNamaLantai() + "." + rak + "." + dus);
-                    d.setLantai(new Lantai(lantaiInsert.getIdLantai(), lantaiInsert.getNamaLantai()));
-                    d.setRak(rakDao.getRak(rak));
-                    d.setQuota(getQuotaDus());
-                    
-                    dusDao.insertDus(d);
                     //update rak
                     rakDao.updateQuotaRak(rak, tmpquotaRak);
                 }
@@ -158,14 +150,17 @@ public class DusModel {
                 rak1.setQuota(tmpquotaRak);
                 rakDao.insertRak(rak1);
 
-                Dus d = new Dus();
-                d.setIdDus(GenerateAutoId.generateAutoId());
-                d.setNamaDus(lantaiInsert.getNamaLantai() + "." + rak + "." + dus);
-                d.setLantai(new Lantai(lantaiInsert.getIdLantai(), lantaiInsert.getNamaLantai()));
-                d.setRak(rakDao.getRak(rak));
-                d.setQuota(getQuotaDus());
             }
+
             dus = dus + 1;
+            Dus d = new Dus();
+            d.setIdDus(GenerateAutoId.generateAutoId());
+            d.setNamaDus(lantaiInsert.getNamaLantai() + "." + rak + "." + dus);
+            d.setLantai(new Lantai(lantaiInsert.getIdLantai(), lantaiInsert.getNamaLantai()));
+            d.setRak(rakDao.getRak(rak));
+            d.setQuota(getQuotaDus());
+
+            dusDao.insertDus(d);
         }
     }
 
@@ -215,5 +210,91 @@ public class DusModel {
         return quota;
     }
 
+    public List<DusModel> load(String idRak) throws ArsipException {
+        List<DusModel> list = new ArrayList<>();
+
+        DusDao dao = DatabaseUtilities.getDusDao();
+        List<Dus> listTmp = dao.getAllDus(idRak);
+        for (Dus dus : listTmp) {
+            DusModel model = new DusModel();
+            model.setIdDus(dus.getIdDus());
+            model.setLokasi(new LantaiModel().getLantaiModel(dus.getLantai().getIdLantai()));
+            model.setRak(new RakModel().getRakModel(dus.getRak().getIdRak()));
+            model.setNamaDus(dus.getNamaDus());
+            model.setQuota(dus.getQuota());
+            list.add(model);
+        }
+
+        return list;
+    }
+
+    public List<DusModel> loadComdoDus() throws ArsipException {
+        List<DusModel> list = new ArrayList<>();
+
+        DusDao dao = DatabaseUtilities.getDusDao();
+        List<Dus> listTmp = dao.getDusEmpety();
+        for (Dus dus : listTmp) {
+            DusModel model = new DusModel();
+            model.setIdDus(dus.getIdDus());
+            model.setLokasi(new LantaiModel().getLantaiModel(dus.getLantai().getIdLantai()));
+            model.setRak(new RakModel().getRakModel(dus.getRak().getIdRak()));
+            model.setNamaDus(dus.getNamaDus());
+            model.setQuota(dus.getQuota());
+            list.add(model);
+        }
+
+        return list;
+    }
+
+    public DusModel getById(String idDus) throws ArsipException {
+
+        DusDao dao = DatabaseUtilities.getDusDao();
+        Dus dus = dao.getDus(idDus);
+        DusModel model = null;
+        if (dus != null) {
+            model = new DusModel();
+            model.setIdDus(dus.getIdDus());
+            model.setLokasi(new LantaiModel().getLantaiModel(dus.getLantai().getIdLantai()));
+            model.setRak(new RakModel().getRakModel(dus.getRak().getIdRak()));
+            model.setNamaDus(dus.getNamaDus());
+            model.setQuota(dus.getQuota());
+        }
+
+        return model;
+    }
+
+    public void updateStokPenerimaan() throws ArsipException {
+        Dus dus = new Dus();
+        dus.setIdDus(idDus);
+        dus.setNamaDus(namaDus);
+        dus.setLantai(new LantaiModel().getLantaiFromModel(lokasi));
+        dus.setRak(new RakModel().getRakFromModel(rak));
+        dus.setQuota(quota - 1);
+
+        DusDao dao = DatabaseUtilities.getDusDao();
+        dao.updateDus(dus);
+    }
     
+    public void updateStokPengembalian() throws ArsipException {
+        Dus dus = new Dus();
+        dus.setIdDus(idDus);
+        dus.setNamaDus(namaDus);
+        dus.setLantai(new LantaiModel().getLantaiFromModel(lokasi));
+        dus.setRak(new RakModel().getRakFromModel(rak));
+        dus.setQuota(quota + 1);
+
+        DusDao dao = DatabaseUtilities.getDusDao();
+        dao.updateDus(dus);
+    }
+
+    public Dus getDusFromModel(DusModel model) {
+        Dus dus = new Dus();
+        dus.setIdDus(model.getIdDus());
+        dus.setNamaDus(model.getNamaDus());
+        dus.setQuota(model.getQuota());
+        dus.setLantai(new LantaiModel().getLantaiFromModel(model.getLokasi()));
+        dus.setRak(new RakModel().getRakFromModel(model.getRak()));
+        return dus;
+    }
+
 }

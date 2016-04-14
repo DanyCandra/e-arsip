@@ -8,7 +8,7 @@ package com.dany.plo.view;
 import com.dany.plo.controller.DusController;
 import com.dany.plo.model.DusModel;
 import com.dany.plo.model.LantaiModel;
-import com.dany.plo.view.resource.render.LokasiListCellRender;
+import com.dany.plo.view.resource.render.list.LokasiListCellRender;
 import com.stripbandunk.jwidget.JDynamicTable;
 import com.stripbandunk.jwidget.JPagination;
 import com.stripbandunk.jwidget.model.DynamicTableModel;
@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  *
  * @author Dany Candra
  */
-public class PanelDusAuto extends javax.swing.JPanel {
+public class PanelLokasiDus extends javax.swing.JPanel {
 
     private DefaultComboBoxModel<LantaiModel> comboBoxModel;
     private DynamicTableModel<DusModel> tableModel;
@@ -35,7 +35,7 @@ public class PanelDusAuto extends javax.swing.JPanel {
     /**
      * Creates new form PanelDusAuto
      */
-    public PanelDusAuto() {
+    public PanelLokasiDus() {
         lantaiModel = new LantaiModel();
         dusModel = new DusModel();
         controller = new DusController();
@@ -51,6 +51,8 @@ public class PanelDusAuto extends javax.swing.JPanel {
         comboBoxModel = new DefaultComboBoxModel<>();
         comboBoxLokasi.setModel(comboBoxModel);
         comboBoxLokasi.setRenderer(new LokasiListCellRender());
+        
+      
     }
 
     public JButton getButtonTambah() {
@@ -81,11 +83,10 @@ public class PanelDusAuto extends javax.swing.JPanel {
         return tableModel;
     }
 
-    public void loadCombo() {
+    public void initForm() {
         controller.loadComboBox(this);
-    }
-    public void reload(){
         controller.reload(PAGE_SIZE, this);
+        controller.cancel(this);
     }
 
     /**
@@ -119,6 +120,8 @@ public class PanelDusAuto extends javax.swing.JPanel {
             }
         });
 
+        tableDus.setAutoCreateRowSorter(false);
+        tableDus.setRowSorter(null);
         jScrollPane1.setViewportView(tableDus);
 
         jPagination.addPaginationListener(new com.stripbandunk.jwidget.listener.PaginationListener() {
@@ -175,12 +178,13 @@ public class PanelDusAuto extends javax.swing.JPanel {
         final int skip = (evt.getCurrentPage() - 1) * evt.getPageSize();
         final int max = evt.getPageSize();
         controller.onPageChange(skip, max, this);
+        controller.cancel(this);
     }//GEN-LAST:event_jPaginationOnPageChange
 
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
         // TODO add your handling code here:
         controller.insertAuto(this);
-        reload();
+        initForm();
     }//GEN-LAST:event_buttonTambahActionPerformed
 
 

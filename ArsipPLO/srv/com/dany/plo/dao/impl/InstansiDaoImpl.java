@@ -200,4 +200,69 @@ public class InstansiDaoImpl implements InstansiDao {
         }
     }
 
+    @Override
+    public List<Instansi> getInstansi() throws ArsipException {
+        final String SELECT = "SELECT * FROM INSTANSI ";
+        List<Instansi> list = new ArrayList<>();
+
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SELECT);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                Instansi instansi = new Instansi();
+                instansi.setIdInstans(set.getString("ID_INSTANSI"));
+                instansi.setNamaInstansi(set.getString("NAMA_INSTANSI"));
+                instansi.setAlamat(set.getString("ALAMAT"));
+                instansi.setTelepon(set.getString("TELEPON"));
+                list.add(instansi);
+            }
+        } catch (SQLException ex) {
+            throw new ArsipException(ex.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    throw new ArsipException(ex.getMessage());
+                }
+            }
+        }
+
+        return list;
+    }
+
+    @Override
+    public Instansi getInstansi(String idInstansi) throws ArsipException {
+        final String SELECT = "SELECT * FROM INSTANSI WHERE ID_INSTANSI=?";
+        Instansi instansi=null;
+
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SELECT);
+            statement.setString(1, idInstansi);
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                instansi = new Instansi();
+                instansi.setIdInstans(set.getString("ID_INSTANSI"));
+                instansi.setNamaInstansi(set.getString("NAMA_INSTANSI"));
+                instansi.setAlamat(set.getString("ALAMAT"));
+                instansi.setTelepon(set.getString("TELEPON"));
+            }
+        } catch (SQLException ex) {
+            throw new ArsipException(ex.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    throw new ArsipException(ex.getMessage());
+                }
+            }
+        }
+
+        return instansi;
+    }
+
+    
 }

@@ -147,9 +147,9 @@ public class UserController {
         if (ValidatorNotNull.isNotNull(username, view, "Nama User") == true
                 && ValidatorNotNull.isNotNull(password, view, "Alamat") == true
                 && ValidatorNotNull.isNotNull(nama, view, "Telepon") == true
-                && ValidatorTextLimit.isLimit(username, 20, view)
-                && ValidatorTextLimit.isLimit(password, 20, view)
-                && ValidatorTextLimit.isLimit(nama, 20, view)) {
+                && ValidatorTextLimit.isLimit(username, 20, view,"User Name")
+                && ValidatorTextLimit.isLimit(password, 20, view,"Password")
+                && ValidatorTextLimit.isLimit(nama, 20, view,"Nama")) {
 
             userModel.setUserName(username);
             userModel.setPassword(password);

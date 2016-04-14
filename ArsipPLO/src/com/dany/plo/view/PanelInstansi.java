@@ -34,6 +34,7 @@ public class PanelInstansi extends javax.swing.JPanel {
         
         tableModel = new DynamicTableModel<>(InstansiModel.class);
         tableInstansi.setDynamicModel(tableModel);
+        
     }
     
     public DynamicTableModel<InstansiModel> getTableModel() {
@@ -111,17 +112,17 @@ public class PanelInstansi extends javax.swing.JPanel {
         });
 
         panelCrud1.addCrudListener(new com.dany.plo.view.resource.CrudListener() {
-            public void tambah(com.dany.plo.view.resource.CrudEvent evt) {
-                panelCrud1Tambah(evt);
-            }
             public void ubah(com.dany.plo.view.resource.CrudEvent evt) {
                 panelCrud1Ubah(evt);
             }
-            public void hapus(com.dany.plo.view.resource.CrudEvent evt) {
-                panelCrud1Hapus(evt);
-            }
             public void segarkan(com.dany.plo.view.resource.CrudEvent evt) {
                 panelCrud1Segarkan(evt);
+            }
+            public void tambah(com.dany.plo.view.resource.CrudEvent evt) {
+                panelCrud1Tambah(evt);
+            }
+            public void hapus(com.dany.plo.view.resource.CrudEvent evt) {
+                panelCrud1Hapus(evt);
             }
         });
 

@@ -145,8 +145,8 @@ public class PejabatController {
 
         if (ValidatorNotNull.isNotNull(namaPejabat, view, "Nama Pejabat") == true
                 && ValidatorNotNull.isNotNull(jabatan, view, "Alamat") == true
-                && ValidatorTextLimit.isLimit(namaPejabat, 50, view)
-                && ValidatorTextLimit.isLimit(jabatan, 30, view)) {
+                && ValidatorTextLimit.isLimit(namaPejabat, 50, view,"Nama Pejabat")
+                && ValidatorTextLimit.isLimit(jabatan, 30, view,"Jabatan")) {
 
             pejabatModel.setNamaPejabat(namaPejabat);
             pejabatModel.setJabatan(jabatan);

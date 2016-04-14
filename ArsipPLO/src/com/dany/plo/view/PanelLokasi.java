@@ -18,6 +18,11 @@ public class PanelLokasi extends javax.swing.JPanel {
         initComponents();
 
     }
+    
+    public void initForm(){
+        jTabbedPane1.setSelectedIndex(0);
+        panelDusAuto.initForm();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,7 +37,7 @@ public class PanelLokasi extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         labelWhite1 = new com.dany.plo.view.resource.LabelWhite();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        panelDusAuto = new com.dany.plo.view.PanelDusAuto();
+        panelDusAuto = new com.dany.plo.view.PanelLokasiDus();
         panelLokasiLantai = new com.dany.plo.view.PanelLokasiLantai();
         panelLokasiRak = new com.dany.plo.view.PanelLokasiRak();
 
@@ -83,7 +88,7 @@ public class PanelLokasi extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelGradient1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,13 +103,12 @@ public class PanelLokasi extends javax.swing.JPanel {
         // TODO add your handling code here:
         int x = jTabbedPane1.getSelectedIndex();
         if (x == 0) {
-            panelDusAuto.loadCombo();
-            panelDusAuto.reload();
-           
+            panelDusAuto.initForm();
         } else if (x == 1) {
              panelLokasiLantai.reload();
         }else if(x==2){
             panelLokasiRak.reload();
+            panelLokasiRak.resetTable();
         }
 
     }//GEN-LAST:event_jTabbedPane1StateChanged
@@ -114,7 +118,7 @@ public class PanelLokasi extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private com.dany.plo.view.resource.LabelWhite labelWhite1;
-    private com.dany.plo.view.PanelDusAuto panelDusAuto;
+    private com.dany.plo.view.PanelLokasiDus panelDusAuto;
     private com.dany.plo.view.resource.PanelGradient panelGradient1;
     private com.dany.plo.view.PanelLokasiLantai panelLokasiLantai;
     private com.dany.plo.view.PanelLokasiRak panelLokasiRak;

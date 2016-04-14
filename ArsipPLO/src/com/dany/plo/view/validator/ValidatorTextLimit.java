@@ -6,7 +6,6 @@
 package com.dany.plo.view.validator;
 
 import java.awt.Component;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,19 +14,18 @@ import javax.swing.JOptionPane;
  */
 public class ValidatorTextLimit {
 
-    public static boolean isLimit(String value, int limit, Component component) {
+    public static boolean isLimit(String value, int limit, Component component, String namaComponent) {
         boolean result = false;
 
         double tmpNumber;
 
-        if (!value.equals("")) {
-            if (value.length() > limit) {
-                result = false;
-                JOptionPane.showMessageDialog(component, "Panjang karakter maksimal " + limit + " karakter", "Pesan Kesalahan", JOptionPane.ERROR_MESSAGE);
-            } else {
-                result = true;
-            }
+        if (value.length() > limit) {
+            result = false;
+            JOptionPane.showMessageDialog(component, "Panjang karakter" + namaComponent + " maksimal " + limit + " karakter", "Pesan Kesalahan", JOptionPane.ERROR_MESSAGE);
+        } else {
+            result = true;
         }
+
         return result;
     }
 

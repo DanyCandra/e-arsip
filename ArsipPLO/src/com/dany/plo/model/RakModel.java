@@ -11,8 +11,8 @@ import com.dany.plo.entitas.Rak;
 import com.dany.plo.exception.ArsipException;
 import com.dany.plo.utilities.DatabaseUtilities;
 import com.dany.plo.utilities.GenerateAutoId;
-import com.dany.plo.view.resource.render.NamaRakRender;
-import com.dany.plo.view.resource.render.QuotaRakRender;
+import com.dany.plo.view.resource.render.table.NamaRakRender;
+import com.dany.plo.view.resource.render.table.QuotaRakRender;
 import com.stripbandunk.jwidget.annotation.TableColumn;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -24,50 +24,50 @@ import java.util.Properties;
  * @author Dany Candra
  */
 public class RakModel {
-
+    
     private String idRak;
-    @TableColumn(name = "NAMA RAK", number = 1, size = 60,renderer = NamaRakRender.class)
+    @TableColumn(name = "NAMA RAK", number = 1, size = 50, renderer = NamaRakRender.class)
     private int namaRak;
-    @TableColumn(name = "QUOTA RAK", number = 2, size = 60,renderer = QuotaRakRender.class)
+    @TableColumn(name = "QUOTA RAK", number = 2, size = 60, renderer = QuotaRakRender.class)
     private int quota;
-
+    
     public RakModel() {
     }
-
+    
     public RakModel(String idRak, int namaRak, int quota) {
         this.idRak = idRak;
         this.namaRak = namaRak;
         this.quota = quota;
     }
-
+    
     public String getIdRak() {
         return idRak;
     }
-
+    
     public void setIdRak(String idRak) {
         this.idRak = idRak;
     }
-
+    
     public int getNamaRak() {
         return namaRak;
     }
-
+    
     public void setNamaRak(int namaRak) {
         this.namaRak = namaRak;
     }
-
+    
     public int getQuota() {
         return quota;
     }
-
+    
     public void setQuota(int quota) {
         this.quota = quota;
     }
-
+    
     public List<RakModel> load() throws ArsipException {
         List<RakModel> list = new ArrayList<>();
-
-        RakDao dao = new RakDaoImpl(DatabaseUtilities.getConnection());
+        
+        RakDao dao = DatabaseUtilities.getRakDao();
         List<Rak> listTmp = dao.getAllRak();
         for (Rak rak : listTmp) {
             RakModel model = new RakModel();
@@ -78,23 +78,23 @@ public class RakModel {
         }
         return list;
     }
-
+    
     public void insert() throws ArsipException {
         Rak rak = new Rak();
         rak.setIdRak(GenerateAutoId.generateAutoId());
         rak.setNamaRak(getRakAkhir());
         rak.setQuota(getQuotaInsret());
-
-        RakDao dao = new RakDaoImpl(DatabaseUtilities.getConnection());
+        
+        RakDao dao = DatabaseUtilities.getRakDao();
         dao.insertRak(rak);
     }
-
+    
     public int getRakAkhir() throws ArsipException {
-        RakDao dao = new RakDaoImpl(DatabaseUtilities.getConnection());
+        RakDao dao = DatabaseUtilities.getRakDao();
         return dao.getRakAkhir() + 1;
-
+        
     }
-
+    
     public int getQuotaInsret() {
         int quota = 0;
         try {
@@ -106,5 +106,25 @@ public class RakModel {
         }
         return quota;
     }
-
+    
+    public RakModel getRakModel(String idRak) throws ArsipException {
+        RakModel model = new RakModel();
+        RakDao dao = DatabaseUtilities.getRakDao();
+        Rak rak = dao.getRak(idRak);
+        
+        model.setIdRak(rak.getIdRak());
+        model.setNamaRak(rak.getNamaRak());
+        model.setQuota(rak.getQuota());
+        return model;
+        
+    }
+    
+    public Rak getRakFromModel(RakModel model) {
+        Rak rak = new Rak();
+        rak.setIdRak(model.getIdRak());
+        rak.setNamaRak(model.getNamaRak());
+        rak.setQuota(model.getQuota());
+        return rak;
+    }
+    
 }

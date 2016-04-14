@@ -26,6 +26,8 @@ public interface UserDao {
     public void delete(String idUser) throws ArsipException;
 
     public User getUser(String username, String password) throws ArsipException;
+    
+    public User getUser(String idUser) throws ArsipException;
 
     public Long count() throws ArsipException;
 }

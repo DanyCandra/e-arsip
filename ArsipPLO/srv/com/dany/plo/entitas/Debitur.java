@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.dany.plo.entitas;
 
 import java.util.Date;
@@ -13,14 +12,13 @@ import java.util.Date;
  * @author Dany Candra
  */
 public class Debitur {
-    
+
     private String cif;
     private String nama;
     private String tempatLahir;
     private Date tanggalLahir;
     private String nik;
     private String alamat;
-    private String rtRw;
     private String kelurahan;
     private String kecamatan;
     private String telepon;
@@ -34,6 +32,7 @@ public class Debitur {
     private String sht;
     private String ijazah;
     private String lainnya;
+    private Instansi instansi;
 
     public Debitur() {
     }
@@ -84,14 +83,6 @@ public class Debitur {
 
     public void setAlamat(String alamat) {
         this.alamat = alamat;
-    }
-
-    public String getRtRw() {
-        return rtRw;
-    }
-
-    public void setRtRw(String rtRw) {
-        this.rtRw = rtRw;
     }
 
     public String getKelurahan() {
@@ -197,7 +188,13 @@ public class Debitur {
     public void setLainnya(String lainnya) {
         this.lainnya = lainnya;
     }
-    
-    
-    
+
+    public Instansi getInstansi() {
+        return instansi;
+    }
+
+    public void setInstansi(Instansi instansi) {
+        this.instansi = instansi;
+    }
+
 }

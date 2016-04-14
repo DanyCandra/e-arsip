@@ -8,7 +8,7 @@ package com.dany.plo.dao.impl;
 import com.dany.plo.entitas.Dus;
 import com.dany.plo.dao.DusDao;
 import com.dany.plo.exception.ArsipException;
-import com.dany.plo.utilities.GenerateAutoId;
+import com.dany.plo.utilities.DatabaseUtilities;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,6 +60,36 @@ public class DusDaoImpl implements DusDao {
     }
 
     @Override
+    public void updateDus(Dus dus) throws ArsipException {
+        final String INSERT_DUS = "UPDATE DUS  SET NAMA_DUS=?, ID_LANTAI=?, ID_RAK=?, QUOTA=? "
+                + "WHERE ID_DUS=?";
+
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(INSERT_DUS);
+
+            statement.setString(1, dus.getNamaDus());
+            statement.setString(2, dus.getLantai().getIdLantai());
+            statement.setString(3, dus.getRak().getIdRak());
+            statement.setInt(4, dus.getQuota());
+            statement.setString(5, dus.getIdDus());
+            statement.executeUpdate();
+
+        } catch (SQLException ex) {
+
+            throw new ArsipException(ex.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+
+                }
+            }
+        }
+    }
+
+    @Override
     public List<Dus> getAllDus() throws ArsipException {
         final String SELECT_ALL = "SELECT * FROM DUS";
 
@@ -73,8 +103,8 @@ public class DusDaoImpl implements DusDao {
                 Dus dus = new Dus();
                 dus.setIdDus(set.getString("ID_DUS"));
                 dus.setNamaDus(set.getString("NAMA_DUS"));
-                dus.setLantai(new LantaiDaoImpl(connection).getLantai(set.getString("ID_LANTAI")));
-                dus.setRak(new RakDaoImpl(connection).getRak(set.getString("ID_RAK")));
+                dus.setLantai(DatabaseUtilities.getLantaiDao().getLantai(set.getString("ID_LANTAI")));
+                dus.setRak(DatabaseUtilities.getRakDao().getRak(set.getString("ID_RAK")));
                 dus.setQuota(set.getInt("QUOTA"));
                 list.add(dus);
             }
@@ -138,8 +168,8 @@ public class DusDaoImpl implements DusDao {
                 Dus dus = new Dus();
                 dus.setIdDus(set.getString("ID_DUS"));
                 dus.setNamaDus(set.getString("NAMA_DUS"));
-                dus.setLantai(new LantaiDaoImpl(connection).getLantai(set.getString("ID_LANTAI")));
-                dus.setRak(new RakDaoImpl(connection).getRak(set.getString("ID_RAK")));
+                dus.setLantai(DatabaseUtilities.getLantaiDao().getLantai(set.getString("ID_LANTAI")));
+                dus.setRak(DatabaseUtilities.getRakDao().getRak(set.getString("ID_RAK")));
                 dus.setQuota(set.getInt("QUOTA"));
                 list.add(dus);
             }
@@ -157,6 +187,112 @@ public class DusDaoImpl implements DusDao {
         }
 
         return list;
+    }
+
+    @Override
+    public List<Dus> getAllDus(String idRak) throws ArsipException {
+        final String SELECT_ALL = "SELECT * FROM DUS WHERE ID_RAK=?";
+
+        List<Dus> list = new ArrayList<>();
+
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SELECT_ALL);
+            statement.setString(1, idRak);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                Dus dus = new Dus();
+                dus.setIdDus(set.getString("ID_DUS"));
+                dus.setNamaDus(set.getString("NAMA_DUS"));
+                dus.setLantai(DatabaseUtilities.getLantaiDao().getLantai(set.getString("ID_LANTAI")));
+                dus.setRak(DatabaseUtilities.getRakDao().getRak(set.getString("ID_RAK")));
+                dus.setQuota(set.getInt("QUOTA"));
+                list.add(dus);
+            }
+        } catch (SQLException ex) {
+
+            throw new ArsipException(ex.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+
+                }
+            }
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Dus> getDusEmpety() throws ArsipException {
+        final String SELECT_ALL = "SELECT * FROM DUS WHERE QUOTA > 0";
+
+        List<Dus> list = new ArrayList<>();
+
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SELECT_ALL);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                Dus dus = new Dus();
+                dus.setIdDus(set.getString("ID_DUS"));
+                dus.setNamaDus(set.getString("NAMA_DUS"));
+                dus.setLantai(DatabaseUtilities.getLantaiDao().getLantai(set.getString("ID_LANTAI")));
+                dus.setRak(DatabaseUtilities.getRakDao().getRak(set.getString("ID_RAK")));
+                dus.setQuota(set.getInt("QUOTA"));
+                list.add(dus);
+            }
+        } catch (SQLException ex) {
+
+            throw new ArsipException(ex.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+
+                }
+            }
+        }
+
+        return list;
+    }
+
+    @Override
+    public Dus getDus(String id) throws ArsipException {
+        final String SELECT_ALL = "SELECT * FROM DUS WHERE ID_DUS=?";
+
+        Dus dus = new Dus();
+
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SELECT_ALL);
+            statement.setString(1, id);
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                dus = new Dus();
+                dus.setIdDus(set.getString("ID_DUS"));
+                dus.setNamaDus(set.getString("NAMA_DUS"));
+                dus.setLantai(new LantaiDaoImpl(connection).getLantai(set.getString("ID_LANTAI")));
+                dus.setRak(new RakDaoImpl(connection).getRak(set.getString("ID_RAK")));
+                dus.setQuota(set.getInt("QUOTA"));
+            }
+        } catch (SQLException ex) {
+
+            throw new ArsipException(ex.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+
+                }
+            }
+        }
+
+        return dus;
     }
 
 }

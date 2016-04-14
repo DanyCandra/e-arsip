@@ -7,9 +7,6 @@ package com.dany.plo.view;
 
 import com.dany.plo.controller.QuotaController;
 import com.dany.plo.model.QuotaModel;
-import com.dany.plo.view.validator.ValidatorNotNull;
-import com.dany.plo.view.validator.ValidatorNumber;
-import com.dany.plo.view.validator.ValidatorTextLimit;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
@@ -51,8 +48,10 @@ public class PanelQuota extends javax.swing.JPanel {
         return textQuotaRak;
     }
     
-   
-
+    
+    public void initForm(){
+        quotaController.batal(this);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -214,5 +213,4 @@ public class PanelQuota extends javax.swing.JPanel {
         quotaController.load(this);
     }
 
-   
 }

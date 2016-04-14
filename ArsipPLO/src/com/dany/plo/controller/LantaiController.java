@@ -12,7 +12,6 @@ import com.dany.plo.view.PanelLokasiLantai;
 import com.dany.plo.view.dialog.DialogLantai;
 import com.dany.plo.view.validator.ValidatorNotNull;
 import com.dany.plo.view.validator.ValidatorTextLimit;
-import com.stripbandunk.jwidget.model.DefaultPaginationModel;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -117,8 +116,8 @@ public class LantaiController {
     public void save(DialogLantai view) {
         String namaLantai = view.getTextNamaLantai().getText().toUpperCase();
 
-        if (ValidatorNotNull.isNotNull(namaLantai, view, "Nama Lantai") == true
-                && ValidatorTextLimit.isLimit(namaLantai, 50, view)) {
+        if (ValidatorNotNull.isNotNull(namaLantai, view, "Nama Lokasi") == true
+                && ValidatorTextLimit.isLimit(namaLantai, 50, view,"Nama Lokasi")) {
 
             lantaiModel.setNamaLantai(namaLantai);
 

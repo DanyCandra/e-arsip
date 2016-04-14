@@ -37,14 +37,16 @@ public class Frame extends javax.swing.JFrame {
         panelTaskBar = new javax.swing.JPanel();
         jXCollapsiblePane1 = new org.jdesktop.swingx.JXCollapsiblePane();
         jXTaskPane1 = new org.jdesktop.swingx.JXTaskPane();
+        butonPengaturanQuota = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        butonPengaturanQuota = new javax.swing.JButton();
         jXTaskPane2 = new org.jdesktop.swingx.JXTaskPane();
-        jButton5 = new javax.swing.JButton();
+        buttonPenerimaan = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        buttonPengembalian = new javax.swing.JButton();
         jXTaskPane3 = new org.jdesktop.swingx.JXTaskPane();
         jButton7 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
@@ -57,7 +59,10 @@ public class Frame extends javax.swing.JFrame {
         panelUser = new com.dany.plo.view.PanelUser();
         panelPejabat = new com.dany.plo.view.PanelPejabat();
         panelLokasi = new com.dany.plo.view.PanelLokasi();
-        panelDus = new com.dany.plo.view.PanelDus();
+        panelPenerimaan = new com.dany.plo.view.PanelPenerimaanBerkas();
+        panelPembaruanBerkas = new com.dany.plo.view.PanelPembaruanBerkas();
+        panelPengembalian = new com.dany.plo.view.PanelPengembalian();
+        panelPencarianBerkas = new com.dany.plo.view.PanelPencarianBerkas();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -65,6 +70,15 @@ public class Frame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jXTaskPane1.setTitle("Pengaturan");
+
+        butonPengaturanQuota.setText("Quota Rak danDus");
+        butonPengaturanQuota.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        butonPengaturanQuota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butonPengaturanQuotaActionPerformed(evt);
+            }
+        });
+        jXTaskPane1.getContentPane().add(butonPengaturanQuota);
 
         jButton1.setText("Penyimpanan");
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -102,31 +116,47 @@ public class Frame extends javax.swing.JFrame {
         });
         jXTaskPane1.getContentPane().add(jButton4);
 
-        butonPengaturanQuota.setText("Quota");
-        butonPengaturanQuota.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        butonPengaturanQuota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butonPengaturanQuotaActionPerformed(evt);
-            }
-        });
-        jXTaskPane1.getContentPane().add(butonPengaturanQuota);
-
         jXCollapsiblePane1.getContentPane().add(jXTaskPane1);
 
         jXTaskPane2.setTitle("Transaksi");
 
-        jButton5.setText("Penerimaan Berkas");
-        jButton5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jXTaskPane2.getContentPane().add(jButton5);
+        buttonPenerimaan.setText("Penerimaan Berkas Baru");
+        buttonPenerimaan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        buttonPenerimaan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPenerimaanActionPerformed(evt);
+            }
+        });
+        jXTaskPane2.getContentPane().add(buttonPenerimaan);
 
-        jButton6.setText("Pengembalian Berkas");
+        jButton6.setText("Pembaruan Berkas");
         jButton6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jXTaskPane2.getContentPane().add(jButton6);
+        jXTaskPane2.getContentPane().add(jSeparator1);
+
+        buttonPengembalian.setText("Pengembalian Berkas");
+        buttonPengembalian.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        buttonPengembalian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPengembalianActionPerformed(evt);
+            }
+        });
+        jXTaskPane2.getContentPane().add(buttonPengembalian);
 
         jXTaskPane3.setTitle("Pencarian");
 
         jButton7.setText("Pencarian Berkas");
         jButton7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
         jXTaskPane3.getContentPane().add(jButton7);
 
         jButton9.setText("Pencarian Dus");
@@ -138,7 +168,7 @@ public class Frame extends javax.swing.JFrame {
         panelTaskBarLayout.setHorizontalGroup(
             panelTaskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jXCollapsiblePane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jXTaskPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+            .addComponent(jXTaskPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
             .addComponent(jXTaskPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelTaskBarLayout.setVerticalGroup(
@@ -149,10 +179,8 @@ public class Frame extends javax.swing.JFrame {
                 .addComponent(jXTaskPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jXTaskPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 140, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        panelUtama.setLayout(new java.awt.BorderLayout());
 
         panelCard.setLayout(new java.awt.CardLayout());
         panelCard.add(panelWellcome1, "card4");
@@ -161,11 +189,25 @@ public class Frame extends javax.swing.JFrame {
         panelCard.add(panelUser, "cardUser");
         panelCard.add(panelPejabat, "cardPejabat");
         panelCard.add(panelLokasi, "cardLokasi");
-        panelCard.add(panelDus, "cardDus");
+        panelCard.add(panelPenerimaan, "cardPenerimaan");
+        panelCard.add(panelPembaruanBerkas, "cardPembaruan");
+        panelCard.add(panelPengembalian, "cardPengembalian");
+        panelCard.add(panelPencarianBerkas, "cardPencarian");
 
         jScrollPane1.setViewportView(panelCard);
 
-        panelUtama.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout panelUtamaLayout = new javax.swing.GroupLayout(panelUtama);
+        panelUtama.setLayout(panelUtamaLayout);
+        panelUtamaLayout.setHorizontalGroup(
+            panelUtamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUtamaLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+        panelUtamaLayout.setVerticalGroup(
+            panelUtamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -182,7 +224,7 @@ public class Frame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelTaskBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelUtama, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
+                .addComponent(panelUtama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,17 +237,22 @@ public class Frame extends javax.swing.JFrame {
 
     private void butonPengaturanQuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butonPengaturanQuotaActionPerformed
         showPanel(panelQuota, "cardQuota");
+
         panelQuota.load();
+        panelQuota.initForm();
     }//GEN-LAST:event_butonPengaturanQuotaActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         showPanel(panelInstansi, "cardInstansi");
+
         panelInstansi.reload();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+
         showPanel(panelLokasi, "cardLokasi");
+        panelLokasi.initForm();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -216,9 +263,35 @@ public class Frame extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+
         showPanel(panelPejabat, "cardPejabat");
         panelPejabat.reload();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void buttonPenerimaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPenerimaanActionPerformed
+        // TODO add your handling code here:
+        showPanel(panelPenerimaan, "cardPenerimaan");
+        panelPenerimaan.initInput();
+    }//GEN-LAST:event_buttonPenerimaanActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        showPanel(panelPembaruanBerkas, "cardPembaruan");
+        panelPembaruanBerkas.initInput();
+        
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void buttonPengembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPengembalianActionPerformed
+        // TODO add your handling code here:
+        showPanel(panelPengembalian, "cardPengembalian");
+        panelPengembalian.loadTable();
+    }//GEN-LAST:event_buttonPengembalianActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        showPanel(panelPencarianBerkas, "cardPencarian");
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,10 +330,11 @@ public class Frame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butonPengaturanQuota;
+    private javax.swing.JButton buttonPenerimaan;
+    private javax.swing.JButton buttonPengembalian;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -269,15 +343,19 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private org.jdesktop.swingx.JXCollapsiblePane jXCollapsiblePane1;
     private org.jdesktop.swingx.JXTaskPane jXTaskPane1;
     private org.jdesktop.swingx.JXTaskPane jXTaskPane2;
     private org.jdesktop.swingx.JXTaskPane jXTaskPane3;
     private javax.swing.JPanel panelCard;
-    private com.dany.plo.view.PanelDus panelDus;
     private com.dany.plo.view.PanelInstansi panelInstansi;
     private com.dany.plo.view.PanelLokasi panelLokasi;
     private com.dany.plo.view.PanelPejabat panelPejabat;
+    private com.dany.plo.view.PanelPembaruanBerkas panelPembaruanBerkas;
+    private com.dany.plo.view.PanelPencarianBerkas panelPencarianBerkas;
+    private com.dany.plo.view.PanelPenerimaanBerkas panelPenerimaan;
+    private com.dany.plo.view.PanelPengembalian panelPengembalian;
     private com.dany.plo.view.PanelQuota panelQuota;
     private javax.swing.JPanel panelTaskBar;
     private com.dany.plo.view.PanelUser panelUser;
@@ -305,5 +383,7 @@ public class Frame extends javax.swing.JFrame {
         CardLayout layout = (CardLayout) panelCard.getLayout();
         layout.show(panelCard, card);
     }
+    
+    
 
 }

@@ -13,6 +13,8 @@ import com.dany.plo.utilities.DatabaseUtilities;
 import com.stripbandunk.jwidget.annotation.TableColumn;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -73,7 +75,7 @@ public class UserModel {
     public List<UserModel> load(int skip, int max) throws ArsipException {
         List<UserModel> list = new ArrayList<>();
 
-        UserDao dao = new UserDaoImpl(DatabaseUtilities.getConnection());
+        UserDao dao = DatabaseUtilities.getUserDao();
         List<User> listTmp = dao.getUser(skip, max);
         for (User user : listTmp) {
             UserModel model = new UserModel();
@@ -88,7 +90,7 @@ public class UserModel {
 
     public Long getLongList() throws ArsipException {
         Long longList = 0L;
-        UserDao dao = new UserDaoImpl(DatabaseUtilities.getConnection());
+        UserDao dao = DatabaseUtilities.getUserDao();
         longList = dao.count();
         return longList;
     }
@@ -100,7 +102,7 @@ public class UserModel {
         user.setPassword(password);
         user.setUserName(userName);
 
-        UserDao dao = new UserDaoImpl(DatabaseUtilities.getConnection());
+        UserDao dao = DatabaseUtilities.getUserDao();
         dao.insertUser(user);
     }
 
@@ -111,19 +113,59 @@ public class UserModel {
         user.setPassword(password);
         user.setUserName(userName);
 
-        UserDao dao = new UserDaoImpl(DatabaseUtilities.getConnection());
+        UserDao dao = DatabaseUtilities.getUserDao();
         dao.updateUser(user);
     }
 
     public boolean isDelete() throws ArsipException {
-        UserDao dao = new UserDaoImpl(DatabaseUtilities.getConnection());
+        UserDao dao = DatabaseUtilities.getUserDao();
         boolean result = dao.canDelete(idUser);
         return result;
     }
 
     public void delete() throws ArsipException {
-        UserDao dao = new UserDaoImpl(DatabaseUtilities.getConnection());
+        UserDao dao = DatabaseUtilities.getUserDao();
         dao.delete(idUser);
+    }
+
+    public User getUserFromModel(UserModel model) {
+        User user = new User();
+        user.setIdUser(model.getIdUser());
+        user.setNama(model.getNama());
+        user.setPassword(model.getPassword());
+        user.setUserName(model.getUserName());
+        return user;
+    }
+
+    public UserModel getDummyUser() {
+        UserModel model = new UserModel();
+        UserDao dao = DatabaseUtilities.getUserDao();
+        User user = new User();
+        try {
+            user = dao.getUser("NK.0476", "KELALEN");
+            model.setIdUser(user.getIdUser());
+            model.setNama(user.getNama());
+            model.setPassword(user.getPassword());
+            model.setUserName(user.getUserName());
+        } catch (ArsipException ex) {
+            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return model;
+    }
+
+    public UserModel getByIdUser(String idUser) throws ArsipException {
+        UserDao dao = DatabaseUtilities.getUserDao();
+        User user = dao.getUser(idUser);
+        UserModel model =new UserModel();
+        if (user != null) {
+            model.setIdUser(user.getIdUser());
+            model.setNama(user.getNama());
+            model.setPassword(user.getPassword());
+            model.setUserName(user.getUserName());
+        }
+
+        return model;
     }
 
 }

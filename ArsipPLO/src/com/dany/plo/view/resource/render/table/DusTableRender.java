@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dany.plo.view.resource.render;
+
+package com.dany.plo.view.resource.render.table;
 
 import java.awt.Component;
 import javax.swing.JLabel;
@@ -14,13 +15,15 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Dany Candra
  */
-public class NamaRakRender extends DefaultTableCellRenderer {
-
+public class DusTableRender extends DefaultTableCellRenderer {
+    
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); 
-        label.setText("Rak Ke "+value);
+        JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); //To change body of generated methods, choose Tools | Templates.
+      
+            label.setText("Dus " + value);
+        
         return label;
     }
-
+    
 }

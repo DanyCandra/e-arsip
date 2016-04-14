@@ -60,9 +60,6 @@ public class PanelLokasiLantai extends javax.swing.JPanel {
         tableLantai = new com.stripbandunk.jwidget.JDynamicTable();
 
         panelCrud1.addCrudListener(new com.dany.plo.view.resource.CrudListener() {
-            public void hapus(com.dany.plo.view.resource.CrudEvent evt) {
-                panelCrud1Hapus(evt);
-            }
             public void ubah(com.dany.plo.view.resource.CrudEvent evt) {
                 panelCrud1Ubah(evt);
             }
@@ -71,6 +68,9 @@ public class PanelLokasiLantai extends javax.swing.JPanel {
             }
             public void tambah(com.dany.plo.view.resource.CrudEvent evt) {
                 panelCrud1Tambah(evt);
+            }
+            public void hapus(com.dany.plo.view.resource.CrudEvent evt) {
+                panelCrud1Hapus(evt);
             }
         });
 

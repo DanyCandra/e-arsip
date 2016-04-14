@@ -147,9 +147,9 @@ public class InstansiController {
         if (ValidatorNotNull.isNotNull(namaInstansi, view, "Nama Instansi") == true
                 && ValidatorNotNull.isNotNull(alamat, view, "Alamat") == true
                 && ValidatorNotNull.isNotNull(telepon, view, "Telepon") == true
-                && ValidatorTextLimit.isLimit(alamat, 100, view)
-                && ValidatorTextLimit.isLimit(telepon, 12, view)
-                && ValidatorTextLimit.isLimit(namaInstansi, 20, view)) {
+                && ValidatorTextLimit.isLimit(alamat, 100, view,"Alamat")
+                && ValidatorTextLimit.isLimit(telepon, 12, view,"Telepon")
+                && ValidatorTextLimit.isLimit(namaInstansi, 20, view,"Nama Instansi")) {
 
             instansiModel.setNamaInstansi(namaInstansi);
             instansiModel.setAlamat(alamat);

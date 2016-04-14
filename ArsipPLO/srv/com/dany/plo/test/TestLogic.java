@@ -46,14 +46,14 @@ public class TestLogic {
                 Rak rak1 = new Rak();
                 rak1.setIdRak(GenerateAutoId.generateAutoId());
                 rak1.setNamaRak(rak);  
-                rak1.setQuota(20);
+                rak1.setQuota(50);
                 rakDao.insertRak(rak1);
             }
             System.out.println("Rak ke" + rak);
             int tmpquotaRak = rakDao.getQuotaRakAkhir();
             System.out.println("Sisa Quota Rak Akhir" + tmpquotaRak);
-            int quotaRak = 20;
-            int jumlahdus =10;
+            int quotaRak = 50;
+            int jumlahdus =51;
             
             for (int i = 1; i <= jumlahdus; i++) {
                 if (tmpquotaRak != 0) {

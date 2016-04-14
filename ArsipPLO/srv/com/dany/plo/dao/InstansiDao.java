@@ -21,6 +21,10 @@ public interface InstansiDao {
 
     public List<Instansi> getInstansi(int skip, int max) throws ArsipException;
 
+    public List<Instansi> getInstansi() throws ArsipException;
+    
+     public Instansi getInstansi(String idInstansi) throws ArsipException;
+
     public boolean canDelete(String idInstansi) throws ArsipException;
 
     public void delete(String idInstansi) throws ArsipException;
